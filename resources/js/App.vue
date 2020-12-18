@@ -1,6 +1,7 @@
 <template>
-    <b-container fluid>
+    <b-container fluid class="m-0 p-0 bg-dark">
         <Nav-Component />
+        <router-view></router-view>
     </b-container>
 </template>
 <script>
