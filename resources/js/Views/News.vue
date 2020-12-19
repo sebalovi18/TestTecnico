@@ -2,10 +2,10 @@
     <News-Component />
 </template>
 <script>
-import NewsComponent from '../Components/NewsComponent/NewsComponent.vue';
+import NewsComponent from "../Components/NewsComponent/NewsComponent.vue";
 export default {
-    components: {
-        NewsComponent
-    }
-}
+  components: {
+    NewsComponent,
+  },
+};
 </script>

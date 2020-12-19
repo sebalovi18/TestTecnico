@@ -1,7 +1,7 @@
 <template>
   <b-row align-h="center" no-gutters>
     <b-col md="4">
-      <b-form class="bg-light p-2 my-5" @submit.prevent="submitForm">
+      <b-form class="bg-light p-2 my-5 rounded" @submit.prevent="submitForm">
         <h3 class="text-center">Log in</h3>
         <b-input-group prepend="User" class="my-2">
           <b-form-input type="text" v-model="user.name"></b-form-input>
