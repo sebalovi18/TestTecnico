@@ -1,19 +1,21 @@
+import router from '../../Router/index'
 const LoginModule = {
     namespaced : true,
-    state : {
-        user : {
-            email : "sebalovi12@gmail.com",
-            password : "1234123"
-        }
-    },
+    state : {},
     getters : {
 
     },
     actions : {
-        async signIn({state}){
-            await axios.post(`${window.location.origin}` , state.user)
-                    .then(res=>console.log(res))
-                    .cath(err=>console.log(err))
+        async signIn({state}, user){
+            await axios.post(`${window.location.origin}/api/login` , user)
+                    .then(resp=>{
+                        window.localStorage.setItem('access_token' , resp.data.access_token);
+                        window.localStorage.setItem('email' , resp.data.email);
+                        router.push('/news');
+                    })
+                    .catch(err=>{
+                        console.log(err)
+                    })
         }
     }
 }

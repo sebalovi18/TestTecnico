@@ -7,7 +7,7 @@
                 variant="light"
                 >
                     {{news.title}}
-                    <Favorite-Button />
+                    <Favorite-Button :news="news" />
                 </b-list-group-item>
         </b-list-group>
         </b-col>
