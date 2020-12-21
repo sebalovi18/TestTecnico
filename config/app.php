@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         App\Providers\NewsProvider::class,
         App\Providers\CustomAuthenticationProvider::class,
+        App\Providers\UserRegisterProvider::class,
 
         /*
          * Package Service Providers...

@@ -9,11 +9,11 @@
         <b-form-group label="Nombre de usuario" class="m-4">
           <b-form-input
             type="text"
-            v-model="$v.user.userName.$model"
-            :state="checkState($v.user.userName)"
+            v-model="$v.user.name.$model"
+            :state="checkState($v.user.name)"
           ></b-form-input>
         </b-form-group>
-        <p v-bind="errorMessageStyle">{{userNameErrors}}</p>
+        <p v-bind="errorMessageStyle">{{nameErrors}}</p>
         <b-form-group label="Email" class="m-4">
           <b-form-input
             type="email"
@@ -58,11 +58,12 @@ import {
   email,
   sameAs,
 } from "vuelidate/lib/validators";
+import {mapActions} from 'vuex';
 export default {
   data() {
     return {
       user: {
-        userName: "",
+        name: "",
         email: "",
         password: "",
         confirmPassword: "",
@@ -73,8 +74,8 @@ export default {
     };
   },
   computed: {
-    userNameErrors() {
-      let name = this.$v.user.userName;
+    nameErrors() {
+      let name = this.$v.user.name;
       if (name.$dirty) {
         if (!name.required) {
           return "Este campo es requerido";
@@ -126,7 +127,7 @@ export default {
       if (this.$v.$invalid) {
         return console.log("Invalido");
       }
-      return console.log(this.$v);
+      this.registerUser(this.$v.user.$model);
     },
     checkState(field) {
       if (field.$dirty) {
@@ -141,10 +142,11 @@ export default {
         }
       }
     },
+    ...mapActions('UserRegisterModule' , ['registerUser'])
   },
   validations: {
     user: {
-      userName: {
+      name: {
         required,
         minLength: minLength(8),
         maxLength: maxLength(255),

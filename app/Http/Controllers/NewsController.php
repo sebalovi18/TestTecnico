@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\FavoriteUserNewsRequest;
 use App\Services\News\ServiceNews;
+use Illuminate\Support\Facades\Auth;
 
 class NewsController extends Controller
 {
@@ -19,11 +20,19 @@ class NewsController extends Controller
 
     public function storeUserNews(FavoriteUserNewsRequest $request)
     {
-        return $this->service->storeUserNews($request->validated());
+        $response = $this->service->storeUserNews($request->validated() , Auth::user());
+
+        return response($response , 201);
     }
 
     public function deleteUserNews(FavoriteUserNewsRequest $request)
     {
-        return $this->service->deleteUserNews($request->validated());
+        $response = $this->service->deleteUserNews($request->validated() , Auth::user());
+        return response($response , 204);
+    }
+
+    public function getUserNews()
+    {
+        return $this->service->getUserNews(Auth::user());
     }
 }

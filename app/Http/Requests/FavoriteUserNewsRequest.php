@@ -13,7 +13,7 @@ class FavoriteUserNewsRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,9 +24,7 @@ class FavoriteUserNewsRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required|string',
-            'link'=>'required|string',
-            'email'=>'required'
+            'id'=>'required'
         ];
     }
 }

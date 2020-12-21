@@ -10,21 +10,24 @@ Vue.use(VueRouter)
 const routes = [
     {
         path:'/',
-        component : Home
+        component : Home,
+        name : 'home'
     },
     {
         path:'/register',
-        component : Register
+        component : Register,
+        name : 'register'
     },
     {
         path:'/news',
-        component : News
+        component : News,
+        name : 'news'
     }
 ];
 
-const Router = new VueRouter({
+const router = new VueRouter({
     routes,
     mode:'history'
 })
 
-export default Router;
+export default router;

@@ -2,72 +2,97 @@
 
 namespace App\Services\News;
 
-use App\Models\FavoriteNews;
+use App\Models\News;
 use App\User;
-use Illuminate\Http\Client\Factory;
+use Exception;
+use GuzzleHttp\Client;
 
 class ServiceNews
 {
-    public $newStoriesUri ;
-    public $getStoriesUri ;
+    public $newStoriesPath;
+    public $getStoriesPath;
 
-    public function __construct(Factory $http ,FavoriteNews $news , User $user)
-    {   
+    public function __construct(Client $http, News $news)
+    {
         $this->http = $http;
         $this->news = $news;
-        $this->newStoriesUri = env('API_HACKERNEWS_NEW_STORIES');
-        $this->getStoriesUri = env('API_HACKERNEWS_STORIE');
+        $this->newStoriesPath = "newstories.json?print=pretty";
+        $this->getStoriesPath = "item/";
     }
 
     public function getNews(int $newsId)
     {
-        return $this->http->get("{$this->getStoriesUri}{$newsId}.json?print=pretty")->json();
+
+        $news = $this->http->get("{$this->getStoriesPath}{$newsId}.json?print=pretty");
+        return json_decode($news->getBody()->getContents(),true);
     }
-    
+
     public function getLastTenNews()
     {
-        $news = $this->http->get($this->newStoriesUri)->json();
 
-        $lastTenNews = array_slice($news,0,10);
+        $response = $this->http->get($this->newStoriesPath);
 
+        $news = json_decode($response->getBody()->getContents() , true);
+
+        $lastTenNews = array_slice($news, 0, 10);
 
         $arrayOfNewsResults = [];
 
-        foreach($lastTenNews as $news)
-        {
-            array_push($arrayOfNewsResults , $this->getNews($news));
+        foreach ($lastTenNews as $news) {
+            array_push($arrayOfNewsResults, $this->getNews($news));
         }
 
         return $arrayOfNewsResults;
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function checkExistNewsOrCreate($validated)
     {
-        $news = $this->news->firstOrCreate(['link'=>$validated['link']],
-                                           ['name'=>$validated['name']]);
-        
+        $news = $this->news->firstOrCreate(
+            ['link' => $validated['link']],
+            ['name' => $validated['name']]
+        );
+
         return $news;
     }
 
-    public function storeUserNews($validated)
+    public function storeUserNews($newsId, User $user)
     {
-        $news = $this->checkExistNewsOrCreate($validated);
-
-        $user = $this->user->where('email' , $validated['email']); ///////////////////////////////
-
-        if($user) $news->users()->attach($user->id);
+        try {
+            $this->news->create([
+                'id' => $newsId['id'],
+                'user_id' => $user->id
+            ]);
+        } catch (Exception $err) {
+            abort(422, "Duplicated");
+        }
     }
 
-    public function deleteUserNews($validated)
+    public function deleteUserNews($newsId, User $user)
     {
-        $news = $this->news->where([
-                        ['name','=',$validated['name']],
-                        ['link','=',$validated['link']]
-                        ])
-                      ->first();
-
-        $user = $this->user->where('email' , $validated['email']); ///////////////////////////////
-        
-        if($news && $user) $news->users()->detach($user->id);
+        try {
+            $news = $this->news->where([
+                ['id', '=', $newsId['id']],
+                ['user_id', '=', $user->id]
+            ]);
+            $news->delete();
+        } catch (Exception $e) {
+            abort(422,"Can't delete");
+        }
     }
+
+    public function getUserNews(User $user)
+    {
+        $newsUser = $user->news;
+
+        $favouriteNews = [];
+
+        foreach($newsUser as $news)
+        {
+            $favouriteNews[]= $this->getNews($news->id);
+        }
+
+        return $favouriteNews;
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

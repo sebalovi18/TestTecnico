@@ -44,16 +44,16 @@ export default {
   },
   methods: {
     addOrRemoveNews() {
-      if (this.flag == false) {
-        this.setFavouriteNews({
-          name: this.news.title,
-          link: this.news.url,
-        });
+      if(this.flag){
+        this.unsetFavouriteUserNews(this.news.id);
         this.flag = !this.flag;
-        console.log("Agregado a favoritos");
+        return
       }
+      this.setFavouriteUserNews(this.news.id);
+      this.flag = !this.flag;
+      return
     },
-    ...mapActions("NewsModule", ["setFavouriteNews"]),
+    ...mapActions("NewsModule", ["setFavouriteUserNews","unsetFavouriteUserNews"]),
   },
 };
 </script>

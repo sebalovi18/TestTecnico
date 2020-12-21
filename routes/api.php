@@ -17,13 +17,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 */
-Route::post('/login' , 'AuthController@login')->name('login');
+Route::post('/register', 'UserRegisterController@register');
+Route::post('/login', 'AuthController@signIn')->name('login');
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('/news')->group(function(){
-        Route::get('/','NewsController@getLastTenNews');
-        Route::get('/userNews','NewsController@getUserNews');
-        Route::post('/','NewsController@storeUserNews');
-        Route::delete('/','NewsController@deleteUserNews');
+        Route::get('','NewsController@getLastTenNews');
+        Route::post('','NewsController@storeUserNews');
+        Route::delete('','NewsController@deleteUserNews');
+        Route::get('/user','NewsController@getUserNews');
     });
 });

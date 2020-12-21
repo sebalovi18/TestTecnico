@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\News;
+use App\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,5 +14,5 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/{any}','SpaController@index')->where('any','.*');
 
+Route::get('/{any}','SpaController@index')->where('any','.*');

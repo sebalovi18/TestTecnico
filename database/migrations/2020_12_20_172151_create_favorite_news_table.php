@@ -13,11 +13,11 @@ class CreateFavoriteNewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('favorite_news', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('link');
+        Schema::create('news', function (Blueprint $table) {
+            $table->bigInteger('id');
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
+            $table->primary(['id', 'user_id']);
         });
     }
 
@@ -28,6 +28,6 @@ class CreateFavoriteNewsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('favorite_news');
+        Schema::dropIfExists('news');
     }
 }

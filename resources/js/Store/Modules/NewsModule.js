@@ -12,7 +12,7 @@ const NewsModule = {
     actions : {
         async setLastTenNews({state})
         {
-            await axios.get(`${window.location.origin}/api/news` , 
+            await axios(`${window.location.origin}/api/news` , 
             {   
                 headers:{
                     'Authorization' : `Bearer ${window.localStorage.getItem('access_token')}`,
@@ -20,18 +20,33 @@ const NewsModule = {
                     'Content-Type' : 'application/json'
                 }
             })
-                .then(resp=>state.lastTenNews = resp.data)
-                .catch(err=>console.log(err))
+            .then(resp=>state.lastTenNews = resp.data)
+            .catch(err=>console.log(err))
         },
 
-        async setFavouriteNews({state},news)
+        async setFavouriteUserNews({state},newsId)
         {
-            await axios.post(`${window.location.origin}/api/news` ,
+            await axios(`${window.location.origin}/api/news` ,
             {
+                method:'post',
                 data : {
-                    name : news.name,
-                    link : news.link,
-                    email : window.localStorage.getItem('email')
+                    id : newsId
+                },
+                headers : {
+                    'Authorization' : `Bearer ${window.localStorage.getItem('access_token')}`,
+                    'Accept' : 'application/json',
+                    'Content-Type' : 'application/json'
+                }
+            })
+        },
+
+        async unsetFavouriteUserNews({state},newsId)
+        {
+            axios(`${window.location.origin}/api/news`, 
+            {
+                method : 'delete',
+                data : {
+                    id : newsId
                 },
                 headers : {
                     'Authorization' : `Bearer ${window.localStorage.getItem('access_token')}`,
