@@ -24,7 +24,7 @@ class FavoriteUserNewsRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'=>'required'
+            'id'=>'required|integer'
         ];
     }
 }

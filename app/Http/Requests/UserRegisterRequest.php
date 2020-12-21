@@ -26,7 +26,26 @@ class UserRegisterRequest extends FormRequest
         return [
             'name'=>'required|string|min:8|max:255',
             'email'=>'required|email',
-            'password'=>'required'
+            'password'=>'required|min:8|max:255'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'required'=>'El campo :attribute es requerido',
+            'min'=>'El campo :attribute debe contener al menos 8 caracteres',
+            'max'=>'El campo :attribute no puede contener tantos caracteres',
+            'email'=>'El campo :attribute debe ser uno valido',
+        ];  
+    }
+
+    public function attributes()
+    {
+        return [
+            'name' => 'nombre',
+            'email' => 'correo',
+            'password' => 'contraseña'
         ];
     }
 }
