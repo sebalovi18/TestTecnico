@@ -14,6 +14,13 @@
           ></b-form-input>
         </b-form-group>
         <p v-bind="errorMessageStyle">{{nameErrors}}</p>
+        <!-- Errores del back si de alguna manera se saltean validacion del front -->
+        <p v-bind="errorMessageStyle"
+        v-for="(errors,i) in getErrors.name" :key="i"
+        >
+          {{errors}}
+        </p>
+        <!-------------------------------------------------------------------------->
         <b-form-group label="Email" class="m-4">
           <b-form-input
             type="email"
@@ -22,6 +29,13 @@
           ></b-form-input>
         </b-form-group>
         <p v-bind="errorMessageStyle">{{emailErrors}}</p>
+        <!-- Errores del back si de alguna manera se saltean validacion del front -->
+        <p v-bind="errorMessageStyle"
+        v-for="(errors,i) in getErrors.email" :key="i"
+        >
+          {{errors}}
+        </p>
+        <!-------------------------------------------------------------------------->
         <b-form-group label="Contraseña" class="m-4">
           <b-form-input
             type="password"
@@ -30,6 +44,13 @@
           ></b-form-input>
         </b-form-group>
         <p v-bind="errorMessageStyle">{{passwordErrors}}</p>
+        <!-- Errores del back si de alguna manera se saltean validacion del front -->
+        <p v-bind="errorMessageStyle"
+        v-for="(errors,i) in getErrors.password" :key="i"
+        >
+          {{errors}}
+        </p>
+        <!-------------------------------------------------------------------------->
         <b-form-group label="Confirmar contraseña" class="m-4">
           <b-form-input
             type="password"
@@ -38,15 +59,19 @@
           ></b-form-input>
         </b-form-group>
         <p v-bind="errorMessageStyle">{{confirmPasswordErrors}}</p>
+        <!-- Errores del back si de alguna manera se saltean validacion del front -->
+        <p v-bind="errorMessageStyle"
+        v-for="(errors,i) in getErrors.password" :key="i"
+        >
+          {{errors}}
+        </p>
+        <!-------------------------------------------------------------------------->
         <div class="d-flex justify-content-end">
           <b-button variant="primary" class="m-4" type="submit"
             >Registrar</b-button
           >
         </div>
       </b-form>
-      <p class="text-light">
-
-      </p>
     </b-col>
   </b-row>
 </template>
@@ -58,7 +83,7 @@ import {
   email,
   sameAs,
 } from "vuelidate/lib/validators";
-import {mapActions} from 'vuex';
+import {mapActions , mapGetters} from 'vuex';
 export default {
   data() {
     return {
@@ -120,11 +145,12 @@ export default {
           return "Las contraseñas son diferentes";
         }
       }
-    }
+    },
+    ...mapGetters('UserRegisterModule',['getErrors'])
   },
   methods: {
     submitRegister() {
-      if (this.$v.$invalid) {
+      if (!this.$v.$invalid) {
         return console.log("Invalido");
       }
       this.registerUser(this.$v.user.$model);

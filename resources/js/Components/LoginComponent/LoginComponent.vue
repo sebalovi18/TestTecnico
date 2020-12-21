@@ -9,20 +9,7 @@
         <b-input-group prepend="Pass" class="my-2">
           <b-form-input type="password" v-model="user.password"></b-form-input>
         </b-input-group>
-<!-- 
-        <div>
-          <b-form-checkbox
-            value="true"
-            unchecked-value="false"
-            v-model="user.remember"
-            size="sm"
-            class="m-2"
-            switch
-          >
-            Remember me
-          </b-form-checkbox>
-        </div>
--->
+        <p v-bind="errorMessageStyle">{{getErrorMessagesSignIn}}</p>
         <div class="d-flex justify-content-end align-items-center">
           <b-button type="submit" variant="primary" class="m-2">
             Log in
@@ -33,16 +20,21 @@
   </b-row>
 </template>
 <script>
-import {mapActions} from 'vuex';
+import {mapActions , mapGetters} from 'vuex';
 export default {
   data() {
     return {
       user: {
         email: "",
         password: "",
-        //remember: false,
       },
+      errorMessageStyle : {
+        class : ['mx-4 text-danger text-center font-italic font-weight-lighter']
+      }
     };
+  },
+  computed:{
+    ...mapGetters('AuthModule',['getErrorMessagesSignIn'])
   },
   methods:{
     submitForm(){

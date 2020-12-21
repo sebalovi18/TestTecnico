@@ -1,6 +1,15 @@
 import router from '../../Router/index'
 const UserRegisterModule = {
     namespaced : true ,
+    state : {
+        errors : {}
+    },
+    getters : {
+        getErrors(state)
+        {
+            return state.errors;
+        }
+    },
     actions : {
         async registerUser( {state} , user)
         {
@@ -21,7 +30,9 @@ const UserRegisterModule = {
                 router.push('/');
             })
             .catch(err=>{
-                console.log(err)
+                if(err.response.status === 422){
+                    state.errors = err.response.data.errors;
+                }
             })
         }
     }

@@ -1,8 +1,17 @@
 import router from "../../Router/index";
 const AuthModule = {
     namespaced: true,
+    state:{
+        errorMessageSignin : ''
+    },
+    getters: {
+        getErrorMessagesSignIn(state)
+        {
+            return state.errorMessageSignin
+        }
+    },
     actions: {
-        async signIn({ state }, user) {
+        async signIn({state}, user) {
             await axios(`${window.location.origin}/api/login`, {
                 method: "post",
                 data: {
@@ -17,7 +26,9 @@ const AuthModule = {
                 }
             })
             .catch(err => {
-                console.log(err);
+                if(err.response.status === 401 || err.response.status === 422){
+                    state.errorMessageSignin = "El email o la contraseña son invalidos";
+                }
             });
         },
         async logOut({ state }) {
