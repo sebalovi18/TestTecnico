@@ -13,6 +13,9 @@ export default {
   props: {
     news: {
       type: Object,
+      default : function(){
+        return {}
+      }
     },
   },
   data() {

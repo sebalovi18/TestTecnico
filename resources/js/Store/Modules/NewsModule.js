@@ -2,11 +2,16 @@ const NewsModule = {
     namespaced : true,
     state : {
         lastTenNews : null,
+        favouriteUserNews : null,
     },
     getters : {
         getLastTenNews(state)
         {
             return state.lastTenNews;
+        },
+        getFavouriteUserNews(state)
+        {
+            return state.favouriteUserNews;
         }
     },
     actions : {
@@ -38,9 +43,9 @@ const NewsModule = {
                     'Content-Type' : 'application/json'
                 }
             })
-        },
 
-        async unsetFavouriteUserNews({state},newsId)
+        },
+        async unsetFavouriteUserNews(context,newsId)
         {
             axios(`${window.location.origin}/api/news`, 
             {
@@ -54,6 +59,22 @@ const NewsModule = {
                     'Content-Type' : 'application/json'
                 }
             })
+            context.dispatch('getAllFavouriteUserNews');
+        },
+        async getAllFavouriteUserNews({state})
+        {
+            await axios(`${window.location.origin}/api/news/user` , 
+            {   
+                headers:{
+                    'Authorization' : `Bearer ${window.localStorage.getItem('access_token')}`,
+                    'Accept' : 'application/json',
+                    'Content-Type' : 'application/json'
+                }
+            })
+            .then(resp=>{
+                state.favouriteUserNews = resp.data;
+            })
+            .catch(err=>console.log(err))
         }
     }
 }

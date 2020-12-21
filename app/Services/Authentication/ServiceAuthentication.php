@@ -38,6 +38,10 @@ class ServiceAuthentication
 
     public function signOut()
     {
-        
+        try{
+            $this->auth->user()->currentAccessToken()->delete();
+        }catch(Exception $error){
+            abort(401, 'Unauthorized');
+        }
     }
 }

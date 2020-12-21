@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 import Home from '../Views/Home.vue';
 import Register from '../Views/Register.vue';
 import News from '../Views/News.vue';
+import MyNews from '../Views/MyNews.vue';
 
 Vue.use(VueRouter)
 
@@ -11,7 +12,7 @@ const routes = [
     {
         path:'/',
         component : Home,
-        name : 'home'
+        name : 'home',
     },
     {
         path:'/register',
@@ -21,7 +22,16 @@ const routes = [
     {
         path:'/news',
         component : News,
-        name : 'news'
+        name : 'news',
+        beforeEnter: (to, from, next) => {
+            if(window.localStorage.getItem('access_token')) next()
+            else next({name:'home'})
+        },
+    },
+    {
+        path:'/mynews',
+        component : MyNews,
+        name : 'mynews'
     }
 ];
 

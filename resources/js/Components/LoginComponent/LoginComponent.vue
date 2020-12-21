@@ -48,7 +48,7 @@ export default {
     submitForm(){
         this.signIn(this.user);
     },
-    ...mapActions('LoginModule' , ['signIn'])
+    ...mapActions('AuthModule' , ['signIn'])
   },
 };
 </script>

@@ -12,11 +12,18 @@
           <b-nav-item to="/">Home</b-nav-item>
           <b-nav-item to="/register">Register</b-nav-item>
           <b-nav-item to="/news">News</b-nav-item>
+          <b-nav-item to="/mynews">MyNews</b-nav-item>
+          <b-nav-item @click="logOut">LogOut</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
   </div>
 </template>
 <script>
-export default {};
+import {mapActions} from 'vuex';
+export default {
+  methods:{
+    ...mapActions('AuthModule' , ['logOut'])
+  },
+};
 </script>
