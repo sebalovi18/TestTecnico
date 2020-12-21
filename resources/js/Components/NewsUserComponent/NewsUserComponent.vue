@@ -6,11 +6,15 @@
             :fields="fields"
             striped
             small
+            hover
             responsive="lg"
             table-variant="light"
             > 
+                <template #cell(indice)="data">
+                    {{data.index}}
+                </template>
                 <template #cell(url)="data">
-                    <a :href="data.item.url">{{data.item.url}}</a>
+                    <a :href="data.item.url" target="_blank">{{data.item.url}}</a>
                 </template>
                 <template #cell(actions)="data">
                     <b-icon icon="trash" variant="danger" class="icon-button" @click="unsetFavouriteUserNews(data.item.id)"></b-icon>
@@ -25,6 +29,7 @@ export default {
     data(){
         return {
             fields : [
+                "indice",
                 {
                     key : 'title',
                     label : 'Title',

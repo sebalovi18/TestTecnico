@@ -84,7 +84,9 @@ import {
   sameAs,
 } from "vuelidate/lib/validators";
 import {mapActions , mapGetters} from 'vuex';
+import TOAST from '../../Mixins/Toast';
 export default {
+  mixins:[TOAST],
   data() {
     return {
       user: {
@@ -150,10 +152,21 @@ export default {
   },
   methods: {
     submitRegister() {
-      if (!this.$v.$invalid) {
-        return console.log("Invalido");
+      if (this.$v.$invalid) {
+        return this.showToast(
+          "El formulario para enviar contiene campos invalidos", 
+          "Operacion invalida", 
+          this.toastConfig.error
+          );
       }
-      this.registerUser(this.$v.user.$model);
+      this.showToast(
+        "Se ha registrado satisfactoriamente",
+        "Operacion exitosa",
+        this.toastConfig.success
+      );
+      setTimeout(()=>{
+        this.registerUser(this.$v.user.$model);
+      },2000);
     },
     checkState(field) {
       if (field.$dirty) {
