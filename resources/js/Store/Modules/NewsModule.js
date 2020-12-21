@@ -47,7 +47,7 @@ const NewsModule = {
         },
         async unsetFavouriteUserNews(context,newsId)
         {
-            axios(`${window.location.origin}/api/news`, 
+            await axios(`${window.location.origin}/api/news`, 
             {
                 method : 'delete',
                 data : {
