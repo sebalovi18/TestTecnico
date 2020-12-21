@@ -7,6 +7,7 @@
             striped
             small
             hover
+            empty-text="No hay noticias guardadas"
             responsive="lg"
             table-variant="light"
             > 

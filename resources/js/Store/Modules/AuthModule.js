@@ -22,6 +22,7 @@ const AuthModule = {
             .then(resp => {
                 if (resp.status === 200) {
                     window.localStorage.setItem("access_token",resp.data.access_token);
+                    state.errorMessageSignin = "";
                     router.push("/news");
                 }
             })
@@ -45,7 +46,8 @@ const AuthModule = {
             .then(resp => {
                 if(resp.status === 200){
                     window.localStorage.clear();
-                    router.push("/");
+                    router.push({name:'home'})
+                    .catch(()=>{})
                 }
             })
             .catch(resp => {});

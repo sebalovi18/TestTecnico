@@ -13,16 +13,29 @@
           <b-nav-item to="/register">Register</b-nav-item>
           <b-nav-item to="/news">News</b-nav-item>
           <b-nav-item to="/mynews">MyNews</b-nav-item>
-          <b-nav-item @click="logOut">LogOut</b-nav-item>
+          <b-nav-item @click="signOut">LogOut</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
   </div>
 </template>
 <script>
+import TOAST from '../../Mixins/Toast';
 import {mapActions} from 'vuex';
 export default {
+  mixins:[TOAST],
   methods:{
+    signOut()
+    {
+      this.showToast(
+        'Se ha deslogueado',
+        'Operacion exitosa',
+        this.toastConfig.success
+      )
+      setTimeout(()=>{
+        this.logOut();
+      },2000)
+    },
     ...mapActions('AuthModule' , ['logOut'])
   },
 };
