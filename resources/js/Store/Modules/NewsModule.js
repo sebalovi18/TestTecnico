@@ -28,7 +28,6 @@ const NewsModule = {
             .then(resp=>state.lastTenNews = resp.data)
             .catch(err=>console.log(err))
         },
-
         async setFavouriteUserNews({state},newsId)
         {
             await axios(`${window.location.origin}/api/news` ,

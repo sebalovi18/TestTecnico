@@ -31,7 +31,11 @@ const routes = [
     {
         path:'/mynews',
         component : MyNews,
-        name : 'mynews'
+        name : 'mynews',
+        beforeEnter: (to, from, next) => {
+            if(window.localStorage.getItem('access_token')) next()
+            else next({name:'home'})
+        },
     }
 ];
 
