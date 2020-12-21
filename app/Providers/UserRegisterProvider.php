@@ -16,9 +16,15 @@ class UserRegisterProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(ServiceUser::class , function($app){
-            return new ServiceUser($app->make(User::class) , $app->make(Hasher::class));
-        });
+        $this->app->singleton(
+            ServiceUser::class, function( $app ) {
+            return 
+                new ServiceUser(
+                    $app->make(User::class), 
+                    $app->make(Hasher::class)
+                );
+            }
+        );
     }
 
     /**

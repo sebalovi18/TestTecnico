@@ -17,9 +17,16 @@ class CustomAuthenticationProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(ServiceAuthentication::class , function($app){
-            return new ServiceAuthentication($app->make(AuthManager::class),$app->make(Hasher::class),$app->make(User::class));
-        });
+        $this->app->singleton(
+            ServiceAuthentication::class, function ( $app ) {
+            return 
+                new ServiceAuthentication(
+                    $app->make(AuthManager::class), 
+                    $app->make(Hasher::class),     
+                    $app->make(User::class)
+                );
+            }
+        );
     }
 
     /**

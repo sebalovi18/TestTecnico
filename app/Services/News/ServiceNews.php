@@ -23,8 +23,10 @@ class ServiceNews
     public function getNews(int $newsId)
     {
 
-        $news = $this->http->get("{$this->getStoriesPath}{$newsId}.json?print=pretty");
-        return json_decode($news->getBody()->getContents(),true);
+        $news = $this->http->get(
+            "{$this->getStoriesPath}{$newsId}.json?print=pretty"
+        );
+        return json_decode($news->getBody()->getContents(), true);
     }
 
     public function getLastTenNews()
@@ -59,10 +61,12 @@ class ServiceNews
     public function storeUserNews($newsId, User $user)
     {
         try {
-            $this->news->create([
-                'id' => $newsId['id'],
-                'user_id' => $user->id
-            ]);
+            $this->news->create(
+                [
+                    'id' => $newsId['id'],
+                    'user_id' => $user->id
+                ]
+            );
         } catch (Exception $err) {
             abort(422, "Duplicated");
         }
@@ -71,13 +75,15 @@ class ServiceNews
     public function deleteUserNews($newsId, User $user)
     {
         try {
-            $news = $this->news->where([
-                ['id', '=', $newsId['id']],
-                ['user_id', '=', $user->id]
-            ]);
+            $news = $this->news->where(
+                [
+                    ['id', '=', $newsId['id']],
+                    ['user_id', '=', $user->id]
+                ]
+            );
             $news->delete();
         } catch (Exception $e) {
-            abort(422,"Can't delete");
+            abort(422, "Can't delete");
         }
     }
 
@@ -87,8 +93,7 @@ class ServiceNews
 
         $favouriteNews = [];
 
-        foreach($newsUser as $news)
-        {
+        foreach ($newsUser as $news) {
             $favouriteNews[]= $this->getNews($news->id);
         }
 

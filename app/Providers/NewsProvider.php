@@ -16,10 +16,15 @@ class NewsProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(ServiceNews::class , function($app){
-            return new ServiceNews(new Client(['base_uri'=>env('API_HACKERNEWS_BASE_URI')]),
-                                   $app->make(News::class));
-        });
+        $this->app->singleton(
+            ServiceNews::class, function ( $app ) {
+            return 
+                new ServiceNews(
+                    new Client(['base_uri'=>env('API_HACKERNEWS_BASE_URI')]),
+                    $app->make(News::class)
+                );
+            }
+        );
     }
 
     /**

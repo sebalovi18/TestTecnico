@@ -9,7 +9,7 @@ use Illuminate\Contracts\Hashing\Hasher;
 
 class ServiceAuthentication
 {
-    public function __construct(AuthManager $auth,Hasher $hash, User $user)
+    public function __construct(AuthManager $auth, Hasher $hash, User $user)
     {
         $this->auth = $auth;
         $this->hash = $hash;
@@ -20,27 +20,27 @@ class ServiceAuthentication
     {
         try {
             if (!$this->auth->attempt($validatedUser)) {
-                abort(401 , 'Unauthorized');
+                abort(401, 'Unauthorized');
             }
             $user = $this->user->where('email', $validatedUser['email'])->first();
             if (!$this->hash->check($validatedUser['password'], $user->password, [])) {
-                abort(401 , 'Unauthorized');
+                abort(401, 'Unauthorized');
             }
             $tokenResult = $user->createToken('authToken')->plainTextToken;
-            return[
+            return [
                 'access_token' => $tokenResult,
                 'token_type' => 'Bearer',
             ];
         } catch (Exception $error) {
-                abort(401 , 'Unauthorized');
+            abort(401, 'Unauthorized');
         }
     }
 
     public function signOut()
     {
-        try{
+        try {
             $this->auth->user()->currentAccessToken()->delete();
-        }catch(Exception $error){
+        } catch (Exception $error) {
             abort(401, 'Unauthorized');
         }
     }

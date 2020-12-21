@@ -16,7 +16,7 @@ class AuthController extends Controller
     public function signIn(LoginRequest $request)
     {
         $response = $this->service->signIn($request->validated());
-        return response($response,200);
+        return response($response, 200);
     }
 
     public function signOut()

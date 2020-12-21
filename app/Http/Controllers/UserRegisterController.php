@@ -16,6 +16,6 @@ class UserRegisterController extends Controller
     public function register(UserRegisterRequest $request)
     {
         $response = $this->service->register($request->validated());
-        return response($response , 201);
+        return response($response, 201);
     }
 }
