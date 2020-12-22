@@ -7,6 +7,7 @@ Dentro de la carpeta raiz del proyecto ejecutar :
 ###### composer install && npm install
 Crear archivo .env
 ###### cp .env.example .env
+Crear key
 ###### php artisan key:generate
 
 Crear una base de datos en mysql
@@ -19,7 +20,8 @@ Configurar las siguientes variables del archivo .env correspondiendo a nuestra D
 ###### DB_USERNAME=root
 ###### DB_PASSWORD=
 
+Migrar
 ###### php artisan migrate
-
+Crear script js
 ###### npm run dev
 
