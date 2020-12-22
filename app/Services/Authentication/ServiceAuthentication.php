@@ -15,15 +15,19 @@ class ServiceAuthentication
         $this->hash = $hash;
         $this->user = $user;
     }
-
     public function signIn($validatedUser)
     {
         try {
             if (!$this->auth->attempt($validatedUser)) {
                 abort(401, 'Unauthorized');
             }
-            $user = $this->user->where('email', $validatedUser['email'])->first();
-            if (!$this->hash->check($validatedUser['password'], $user->password, [])) {
+            $user = $this->user->where(
+                'email', $validatedUser['email']
+            )->first();
+            if (!$this->hash->check(
+                $validatedUser['password'], $user->password, []
+            )
+            ) {
                 abort(401, 'Unauthorized');
             }
             $tokenResult = $user->createToken('authToken')->plainTextToken;
@@ -35,7 +39,6 @@ class ServiceAuthentication
             abort(401, 'Unauthorized');
         }
     }
-
     public function signOut()
     {
         try {

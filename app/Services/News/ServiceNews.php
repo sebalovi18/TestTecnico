@@ -19,35 +19,27 @@ class ServiceNews
         $this->newStoriesPath = "newstories.json?print=pretty";
         $this->getStoriesPath = "item/";
     }
-
     public function getNews(int $newsId)
     {
 
         $news = $this->http->get(
             "{$this->getStoriesPath}{$newsId}.json?print=pretty"
         );
+
         return json_decode($news->getBody()->getContents(), true);
     }
-
     public function getLastTenNews()
     {
-
         $response = $this->http->get($this->newStoriesPath);
-
-        $news = json_decode($response->getBody()->getContents() , true);
-
+        $news = json_decode($response->getBody()->getContents(), true);
         $lastTenNews = array_slice($news, 0, 10);
-
         $arrayOfNewsResults = [];
-
         foreach ($lastTenNews as $news) {
             array_push($arrayOfNewsResults, $this->getNews($news));
         }
 
         return $arrayOfNewsResults;
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function checkExistNewsOrCreate($validated)
     {
         $news = $this->news->firstOrCreate(
@@ -57,7 +49,6 @@ class ServiceNews
 
         return $news;
     }
-
     public function storeUserNews($newsId, User $user)
     {
         try {
@@ -71,7 +62,6 @@ class ServiceNews
             abort(422, "Duplicated");
         }
     }
-
     public function deleteUserNews($newsId, User $user)
     {
         try {
@@ -86,18 +76,14 @@ class ServiceNews
             abort(422, "Can't delete");
         }
     }
-
     public function getUserNews(User $user)
     {
         $newsUser = $user->news;
-
         $favouriteNews = [];
-
         foreach ($newsUser as $news) {
             $favouriteNews[]= $this->getNews($news->id);
         }
 
         return $favouriteNews;
     }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

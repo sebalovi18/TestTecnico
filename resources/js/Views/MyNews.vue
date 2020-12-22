@@ -1,11 +1,11 @@
 <template>
-    <NewsUserComponent />
+  <NewsUserComponent />
 </template>
 <script>
-import NewsUserComponent from '../Components/NewsUserComponent/NewsUserComponent.vue';
+import NewsUserComponent from "../Components/NewsUserComponent/NewsUserComponent.vue";
 export default {
-    components : {
-        NewsUserComponent
-    }
-}
+  components: {
+    NewsUserComponent,
+  },
+};
 </script>

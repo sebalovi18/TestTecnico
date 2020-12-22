@@ -1,11 +1,11 @@
 <template>
-    <Register-Component />
+  <Register-Component />
 </template>
 <script>
-import RegisterComponent from '../Components/RegisterComponent/RegisterComponent.vue';
+import RegisterComponent from "../Components/RegisterComponent/RegisterComponent.vue";
 export default {
-    components:{
-        RegisterComponent
-    }
-}
+  components: {
+    RegisterComponent,
+  },
+};
 </script>

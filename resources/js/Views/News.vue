@@ -1,5 +1,5 @@
 <template>
-    <News-Component />
+  <News-Component />
 </template>
 <script>
 import NewsComponent from "../Components/NewsComponent/NewsComponent.vue";

@@ -13,12 +13,14 @@
             :state="checkState($v.user.name)"
           ></b-form-input>
         </b-form-group>
-        <p v-bind="errorMessageStyle">{{nameErrors}}</p>
+        <p v-bind="errorMessageStyle">{{ nameErrors }}</p>
         <!-- Errores del back si de alguna manera se saltean validacion del front -->
-        <p v-bind="errorMessageStyle"
-        v-for="(errors,i) in getErrors.name" :key="i"
+        <p
+          v-bind="errorMessageStyle"
+          v-for="(errors, i) in getErrors.name"
+          :key="i"
         >
-          {{errors}}
+          {{ errors }}
         </p>
         <!-------------------------------------------------------------------------->
         <b-form-group label="Email" class="m-4">
@@ -28,12 +30,14 @@
             :state="checkState($v.user.email)"
           ></b-form-input>
         </b-form-group>
-        <p v-bind="errorMessageStyle">{{emailErrors}}</p>
+        <p v-bind="errorMessageStyle">{{ emailErrors }}</p>
         <!-- Errores del back si de alguna manera se saltean validacion del front -->
-        <p v-bind="errorMessageStyle"
-        v-for="(errors,i) in getErrors.email" :key="i"
+        <p
+          v-bind="errorMessageStyle"
+          v-for="(errors, i) in getErrors.email"
+          :key="i"
         >
-          {{errors}}
+          {{ errors }}
         </p>
         <!-------------------------------------------------------------------------->
         <b-form-group label="Contraseña" class="m-4">
@@ -43,12 +47,14 @@
             :state="checkState($v.user.password)"
           ></b-form-input>
         </b-form-group>
-        <p v-bind="errorMessageStyle">{{passwordErrors}}</p>
+        <p v-bind="errorMessageStyle">{{ passwordErrors }}</p>
         <!-- Errores del back si de alguna manera se saltean validacion del front -->
-        <p v-bind="errorMessageStyle"
-        v-for="(errors,i) in getErrors.password" :key="i"
+        <p
+          v-bind="errorMessageStyle"
+          v-for="(errors, i) in getErrors.password"
+          :key="i"
         >
-          {{errors}}
+          {{ errors }}
         </p>
         <!-------------------------------------------------------------------------->
         <b-form-group label="Confirmar contraseña" class="m-4">
@@ -58,12 +64,14 @@
             :state="checkState($v.user.confirmPassword)"
           ></b-form-input>
         </b-form-group>
-        <p v-bind="errorMessageStyle">{{confirmPasswordErrors}}</p>
+        <p v-bind="errorMessageStyle">{{ confirmPasswordErrors }}</p>
         <!-- Errores del back si de alguna manera se saltean validacion del front -->
-        <p v-bind="errorMessageStyle"
-        v-for="(errors,i) in getErrors.password" :key="i"
+        <p
+          v-bind="errorMessageStyle"
+          v-for="(errors, i) in getErrors.password"
+          :key="i"
         >
-          {{errors}}
+          {{ errors }}
         </p>
         <!-------------------------------------------------------------------------->
         <div class="d-flex justify-content-end">
@@ -83,10 +91,10 @@ import {
   email,
   sameAs,
 } from "vuelidate/lib/validators";
-import {mapActions , mapGetters} from 'vuex';
-import TOAST from '../../Mixins/Toast';
+import { mapActions, mapGetters } from "vuex";
+import TOAST from "../../Mixins/Toast";
 export default {
-  mixins:[TOAST],
+  mixins: [TOAST],
   data() {
     return {
       user: {
@@ -95,9 +103,9 @@ export default {
         password: "",
         confirmPassword: "",
       },
-      errorMessageStyle : {
-        class : ['mx-4 text-danger font-italic font-weight-lighter']
-      }
+      errorMessageStyle: {
+        class: ["mx-4 text-danger font-italic font-weight-lighter"],
+      },
     };
   },
   computed: {
@@ -140,7 +148,7 @@ export default {
         }
       }
     },
-    confirmPasswordErrors(){
+    confirmPasswordErrors() {
       let confirmPassword = this.$v.user.confirmPassword;
       if (confirmPassword.$dirty) {
         if (confirmPassword.$invalid) {
@@ -148,25 +156,25 @@ export default {
         }
       }
     },
-    ...mapGetters('UserRegisterModule',['getErrors'])
+    ...mapGetters("UserRegisterModule", ["getErrors"]),
   },
   methods: {
     submitRegister() {
       if (this.$v.$invalid) {
         return this.showToast(
-          "El formulario para enviar contiene campos invalidos", 
-          "Operacion invalida", 
+          "El formulario para enviar contiene campos invalidos",
+          "Operacion invalida",
           this.toastConfig.error
-          );
+        );
       }
       this.showToast(
         "Se ha registrado satisfactoriamente",
         "Operacion exitosa",
         this.toastConfig.success
       );
-      setTimeout(()=>{
+      setTimeout(() => {
         this.registerUser(this.$v.user.$model);
-      },2000);
+      }, 2000);
     },
     checkState(field) {
       if (field.$dirty) {
@@ -181,7 +189,7 @@ export default {
         }
       }
     },
-    ...mapActions('UserRegisterModule' , ['registerUser'])
+    ...mapActions("UserRegisterModule", ["registerUser"]),
   },
   validations: {
     user: {

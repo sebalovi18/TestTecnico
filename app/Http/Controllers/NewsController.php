@@ -12,25 +12,28 @@ class NewsController extends Controller
     {
         $this->service = $service;
     }
-
     public function getLastTenNews()
     {
         return $this->service->getLastTenNews();
     }
-
     public function storeUserNews(FavoriteUserNewsRequest $request)
     {
-        $response = $this->service->storeUserNews($request->validated() , Auth::user());
+        $response = $this->service->storeUserNews(
+            $request->validated(), 
+            Auth::user()
+        );
 
         return response($response , 201);
     }
-
     public function deleteUserNews(FavoriteUserNewsRequest $request)
     {
-        $response = $this->service->deleteUserNews($request->validated() , Auth::user());
+        $response = $this->service->deleteUserNews(
+            $request->validated(), 
+            Auth::user()
+        );
+
         return response($response , 204);
     }
-
     public function getUserNews()
     {
         return $this->service->getUserNews(Auth::user());

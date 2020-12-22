@@ -1,80 +1,77 @@
 const NewsModule = {
-    namespaced : true,
-    state : {
-        lastTenNews : null,
-        favouriteUserNews : null,
+    namespaced: true,
+    state: {
+        lastTenNews: null,
+        favouriteUserNews: null
     },
-    getters : {
-        getLastTenNews(state)
-        {
+    getters: {
+        getLastTenNews(state) {
             return state.lastTenNews;
         },
-        getFavouriteUserNews(state)
-        {
+        getFavouriteUserNews(state) {
             return state.favouriteUserNews;
         }
     },
-    actions : {
-        async setLastTenNews({state})
-        {
-            await axios(`${window.location.origin}/api/news` , 
-            {   
-                headers:{
-                    'Authorization' : `Bearer ${window.localStorage.getItem('access_token')}`,
-                    'Accept' : 'application/json',
-                    'Content-Type' : 'application/json'
+    actions: {
+        async setLastTenNews({ state }) {
+            await axios(`${window.location.origin}/api/news`, {
+                headers: {
+                    Authorization: `Bearer ${window.localStorage.getItem(
+                        "access_token"
+                    )}`,
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
                 }
             })
-            .then(resp=>state.lastTenNews = resp.data)
-            .catch(err=>console.log(err))
+                .then(resp => (state.lastTenNews = resp.data))
+                .catch(err => console.log(err));
         },
-        async setFavouriteUserNews({state},newsId)
-        {
-            await axios(`${window.location.origin}/api/news` ,
-            {
-                method:'post',
-                data : {
-                    id : newsId
+        async setFavouriteUserNews({ state }, newsId) {
+            await axios(`${window.location.origin}/api/news`, {
+                method: "post",
+                data: {
+                    id: newsId
                 },
-                headers : {
-                    'Authorization' : `Bearer ${window.localStorage.getItem('access_token')}`,
-                    'Accept' : 'application/json',
-                    'Content-Type' : 'application/json'
+                headers: {
+                    Authorization: `Bearer ${window.localStorage.getItem(
+                        "access_token"
+                    )}`,
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
                 }
-            })
-
+            });
         },
-        async unsetFavouriteUserNews(context,newsId)
-        {
-            await axios(`${window.location.origin}/api/news`, 
-            {
-                method : 'delete',
-                data : {
-                    id : newsId
+        async unsetFavouriteUserNews(context, newsId) {
+            await axios(`${window.location.origin}/api/news`, {
+                method: "delete",
+                data: {
+                    id: newsId
                 },
-                headers : {
-                    'Authorization' : `Bearer ${window.localStorage.getItem('access_token')}`,
-                    'Accept' : 'application/json',
-                    'Content-Type' : 'application/json'
+                headers: {
+                    Authorization: `Bearer ${window.localStorage.getItem(
+                        "access_token"
+                    )}`,
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
                 }
-            })
-            context.dispatch('getAllFavouriteUserNews');
+            });
+            context.dispatch("getAllFavouriteUserNews");
         },
-        async getAllFavouriteUserNews({state})
-        {
-            await axios(`${window.location.origin}/api/news/user` , 
-            {   
-                headers:{
-                    'Authorization' : `Bearer ${window.localStorage.getItem('access_token')}`,
-                    'Accept' : 'application/json',
-                    'Content-Type' : 'application/json'
+        async getAllFavouriteUserNews({ state }) {
+            await axios(`${window.location.origin}/api/news/user`, {
+                headers: {
+                    Authorization: `Bearer ${window.localStorage.getItem(
+                        "access_token"
+                    )}`,
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
                 }
             })
-            .then(resp=>{
-                state.favouriteUserNews = resp.data;
-            })
-            .catch(err=>console.log(err))
+                .then(resp => {
+                    state.favouriteUserNews = resp.data;
+                })
+                .catch(err => console.log(err));
         }
     }
-}
+};
 export default NewsModule;

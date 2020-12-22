@@ -13,7 +13,6 @@ class ServiceUser
         $this->user = $user;
         $this->hash = $hash;
     }
-
     public function register($user)
     {
         try {

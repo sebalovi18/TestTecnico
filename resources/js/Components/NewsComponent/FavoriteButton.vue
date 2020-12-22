@@ -13,9 +13,9 @@ export default {
   props: {
     news: {
       type: Object,
-      default : function(){
-        return {}
-      }
+      default: function () {
+        return {};
+      },
     },
   },
   data() {
@@ -47,16 +47,19 @@ export default {
   },
   methods: {
     addOrRemoveNews() {
-      if(this.flag){
+      if (this.flag) {
         this.unsetFavouriteUserNews(this.news.id);
         this.flag = !this.flag;
-        return
+        return;
       }
       this.setFavouriteUserNews(this.news.id);
       this.flag = !this.flag;
-      return
+      return;
     },
-    ...mapActions("NewsModule", ["setFavouriteUserNews","unsetFavouriteUserNews"]),
+    ...mapActions("NewsModule", [
+      "setFavouriteUserNews",
+      "unsetFavouriteUserNews",
+    ]),
   },
 };
 </script>
