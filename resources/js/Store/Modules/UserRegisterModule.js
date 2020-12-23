@@ -5,13 +5,13 @@ const UserRegisterModule = {
         errors: {
             name: [],
             email: [],
-            password: [],
+            password: []
         }
     },
     getters: {
-        getErrors( state ) {
+        getErrors(state) {
             return state.errors;
-        },
+        }
     },
     actions: {
         async registerUser({ state }, user) {
@@ -29,12 +29,19 @@ const UserRegisterModule = {
             })
                 .then(resp => {
                     if (resp.status === 201) {
+                        state.errors = {
+                            name: [],
+                            email: [],
+                            password: []
+                        };
                         router.push("/");
                     }
                 })
                 .catch(err => {
                     if (err.response.status === 409) {
-                        state.errors.email = ["El correo con el que quiere registrarse ya existe"];
+                        state.errors.email = [
+                            "El correo con el que quiere registrarse ya existe"
+                        ];
                     }
                     if (err.response.status === 422) {
                         state.errors = err.response.data.errors;
