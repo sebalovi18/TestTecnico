@@ -24,7 +24,7 @@ class ServiceUser
                 ]
             );
         } catch (Exception $error) {
-            abort(422, 'Duplicated');
+            abort(409, 'Duplicated');
         }
     }
 }

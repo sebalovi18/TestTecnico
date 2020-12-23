@@ -40,15 +40,6 @@ class ServiceNews
 
         return $arrayOfNewsResults;
     }
-    public function checkExistNewsOrCreate($validated)
-    {
-        $news = $this->news->firstOrCreate(
-            ['link' => $validated['link']],
-            ['name' => $validated['name']]
-        );
-
-        return $news;
-    }
     public function storeUserNews($newsId, User $user)
     {
         try {

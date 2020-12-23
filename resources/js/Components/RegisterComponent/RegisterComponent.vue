@@ -167,14 +167,7 @@ export default {
           this.toastConfig.error
         );
       }
-      this.showToast(
-        "Se ha registrado satisfactoriamente",
-        "Operacion exitosa",
-        this.toastConfig.success
-      );
-      setTimeout(() => {
-        this.registerUser(this.$v.user.$model);
-      }, 2000);
+      this.registerUser(this.$v.user.$model);
     },
     checkState(field) {
       if (field.$dirty) {

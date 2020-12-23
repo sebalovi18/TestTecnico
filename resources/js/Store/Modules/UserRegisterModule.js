@@ -2,12 +2,16 @@ import router from "../../Router/index";
 const UserRegisterModule = {
     namespaced: true,
     state: {
-        errors: {}
+        errors: {
+            name: [],
+            email: [],
+            password: [],
+        }
     },
     getters: {
-        getErrors(state) {
+        getErrors( state ) {
             return state.errors;
-        }
+        },
     },
     actions: {
         async registerUser({ state }, user) {
@@ -24,9 +28,14 @@ const UserRegisterModule = {
                 }
             })
                 .then(resp => {
-                    router.push("/");
+                    if (resp.status === 201) {
+                        router.push("/");
+                    }
                 })
                 .catch(err => {
+                    if (err.response.status === 409) {
+                        state.errors.email = ["El correo con el que quiere registrarse ya existe"];
+                    }
                     if (err.response.status === 422) {
                         state.errors = err.response.data.errors;
                     }

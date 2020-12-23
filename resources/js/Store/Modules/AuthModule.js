@@ -55,7 +55,12 @@ const AuthModule = {
                         router.push({ name: "home" }).catch(() => {});
                     }
                 })
-                .catch(resp => {});
+                .catch(err => {
+                    if (err.response.status === 401) {
+                        window.localStorage.clear();
+                        router.push({ name: "home" }).catch(() => {});
+                    }
+                });
         }
     }
 };

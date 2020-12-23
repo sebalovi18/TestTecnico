@@ -3,7 +3,6 @@ import Vuex from "vuex";
 
 import AuthModule from "./Modules/AuthModule";
 import UserRegisterModule from "./Modules/UserRegisterModule";
-
 import NewsModule from "./Modules/NewsModule";
 
 Vue.use(Vuex);

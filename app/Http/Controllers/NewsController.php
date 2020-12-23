@@ -23,7 +23,7 @@ class NewsController extends Controller
             Auth::user()
         );
 
-        return response($response , 201);
+        return response($response, 201);
     }
     public function deleteUserNews(FavoriteUserNewsRequest $request)
     {
@@ -32,7 +32,7 @@ class NewsController extends Controller
             Auth::user()
         );
 
-        return response($response , 204);
+        return response($response, 204);
     }
     public function getUserNews()
     {
