@@ -86,7 +86,7 @@ const NewsModule = {
                     }
                 })
                 .catch(err => {
-                    if (err.status === 401) {
+                    if (err.response.status === 401) {
                         console.log(
                             "Usted no tiene permisos para realizar esta operacion"
                         );
